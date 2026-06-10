@@ -173,7 +173,7 @@ export default function Header() {
             {t.nav.myCart}
           </Link>
 
-          <button
+          {/* <button
             onClick={toggleLocale}
             className="group relative flex h-[38px] w-[92px] items-center rounded-full border border-[#E5E7EB] bg-[#F8F8F8] p-1 text-[11px] font-bold uppercase text-[#151515] transition-all duration-300 hover:border-[#f15a24]/40 hover:bg-[#fff3ee]"
             aria-label={t.common.language}
@@ -202,7 +202,7 @@ export default function Header() {
             >
               FR
             </span>
-          </button>
+          </button> */}
 
           <Button variant="outline" size="sm">
             {t.nav.signIn}
