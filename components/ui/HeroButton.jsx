@@ -8,7 +8,8 @@ export function HeroButton({
   asChild = false,
   ...props
 }) {
-  const Comp = asChild ? Slot : "HeroButton";
+  const Comp = asChild ? Slot : "button";
+
   return (
     <Comp
       className={cn(
@@ -16,7 +17,7 @@ export function HeroButton({
         variant === "primary" &&
           "bg-[#EB6223] text-white hover:-translate-y-0.5 hover:shadow-lg hover:shadow-orange-500/20",
         variant === "outline" &&
-          "border border-[#EB6223] rounded-[50px]!  bg-white text-[#EB6223] hover:bg-[#fff0e8]",
+          "border border-[#EB6223] rounded-[50px]! bg-white text-[#EB6223] hover:bg-[#fff0e8]",
         variant === "white" &&
           "bg-white text-black hover:-translate-y-0.5 hover:shadow-lg",
         size === "default" && "h-14 max-w-[220px] w-full px-8 text-sm",

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -12,23 +12,71 @@
   --border: #ececec;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
 body {
   margin: 0;
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
-button, input { font-family: inherit; }
-img { max-width: 100%; height: auto; }
-.container-dar { width: min(100% - 32px, 1200px); margin-inline: auto; }
-.text-balance { text-wrap: balance; }
-.orange { color: var(--orange); }
-.section-pad { padding: 86px 0; }
-.card-shadow { box-shadow: 0 18px 50px rgba(0,0,0,.08); }
-.hide-scrollbar::-webkit-scrollbar { display: none; }
-.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-@media (max-width: 768px) { .section-pad { padding: 56px 0; } .container-dar{ width:min(100% - 24px,1180px);} }
+button,
+input {
+  font-family: inherit;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+.container-dar {
+  width: min(100% - 32px, 1200px);
+  margin-inline: auto;
+}
+.text-balance {
+  text-wrap: balance;
+}
+.orange {
+  color: var(--orange);
+}
+.section-pad {
+  padding: 86px 0;
+}
+.card-shadow {
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+@media (max-width: 768px) {
+  .section-pad {
+    padding: 56px 0;
+  }
+  .container-dar {
+    width: min(100% - 24px, 1180px);
+  }
+}
+/* rounded coding css  */
+@keyframes yesRoundSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.yes-round-spin {
+  animation: yesRoundSpin 26s linear infinite;
+  transform-origin: center center;
+}
