@@ -2,7 +2,7 @@ import "./globals.css";
 import { I18nProvider } from "@/components/i18n-provider";
 
 export const metadata = {
-  title: "DAR - Brand Builder",
+  title: "DAR AI - Brand Builder",
   description: "Build a powerful brand presence instantly with AI.",
 };
 
