@@ -65,7 +65,7 @@ export default function BrandNeeds() {
                   className={cn(
                     "text-xl font-semibold transition-colors duration-300",
                     "text-black group-hover:text-[#EB6223]",
-                    isActiveCard && "text-[#EB6223]",
+               
                   )}
                 >
                   {it[0]}
