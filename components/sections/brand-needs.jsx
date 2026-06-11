@@ -50,14 +50,12 @@ export default function BrandNeeds() {
                 className={cn(
                   "group rounded-[20px] bg-[#F6F6F6] p-5 transition-all duration-300 ease-out",
                   "hover:-translate-y-1 hover:bg-[#FFF5F0] hover:shadow-xl",
-                  isActiveCard && "bg-[#FFF5F0]",
                 )}
               >
                 <div
                   className={cn(
                     "mb-6 grid h-16 w-16 place-items-center rounded-[16px] transition-all duration-300 ease-out",
-                    "bg-white/40 text-black group-hover:bg-[#FEE4D8] group-hover:text-[#EB6223]",
-                    isActiveCard && "bg-[#FEE4D8] text-[#EB6223]",
+                    "bg-[#E5E7EB] text-black group-hover:bg-[#FEE4D8] group-hover:text-[#EB6223]",
                   )}
                 >
                   <CardIcon className="h-8 w-8 transition-all duration-300 ease-out group-hover:scale-110" />

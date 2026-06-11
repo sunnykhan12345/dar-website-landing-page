@@ -53,7 +53,7 @@ export default function AfterSwitchSection() {
                   <div
                     className={cn(
                       "mb-8 grid h-16 w-16 place-items-center rounded-[16px]",
-                      "bg-[#F2F2F2] text-black transition-all duration-500 ease-out",
+                      "bg-[#E5E7EB] text-black transition-all duration-500 ease-out",
                       "group-hover:bg-[#FEE4D8] group-hover:text-[#EB6223]",
                       "group-hover:shadow-[0_12px_28px_rgba(235,98,35,0.18)]",
                     )}

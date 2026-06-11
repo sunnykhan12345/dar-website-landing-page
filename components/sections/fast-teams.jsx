@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/i18n-provider";
 
 import {
@@ -30,12 +31,26 @@ export default function FastTeams() {
               const IconComponent = icons[i];
 
               return (
-                <div key={text} className="rounded-[20px] bg-[#F6F6F6] p-5">
-                  <div className="w-16 h-16 rounded-[16px] bg-[#F2F2F2] flex items-center justify-center">
-                    <IconComponent />
+                <div
+                  key={text}
+                  className={cn(
+                    "group rounded-[20px] bg-[#F6F6F6] p-5",
+                    "transition-all duration-500 ease-out",
+                    "hover:-translate-y-2 hover:bg-[#FFF5F0] hover:shadow-[0_24px_70px_rgba(0,0,0,0.12)]",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "flex h-16 w-16 items-center justify-center rounded-[16px]",
+                      "bg-[#E5E7EB] text-black transition-all duration-500 ease-out",
+                      "group-hover:bg-[#FEE4D8] group-hover:text-[#EB6223]",
+                      "group-hover:shadow-[0_12px_28px_rgba(235,98,35,0.18)]",
+                    )}
+                  >
+                    <IconComponent className="transition-all duration-500 ease-out group-hover:scale-110" />
                   </div>
 
-                  <p className="mt-8 text-[15px] lg:text-lg leading-6">
+                  <p className="mt-8 text-[15px] leading-6 text-black transition-colors duration-300 group-hover:text-[#EB6223] lg:text-lg">
                     {text}
                   </p>
                 </div>
@@ -50,7 +65,7 @@ export default function FastTeams() {
           width={1728}
           height={2034}
           sizes="(max-width: 1024px) 100vw, 687px"
-          className="rounded-[18px] object-cover"
+          className="rounded-[18px] object-cover transition-transform duration-700 ease-out hover:scale-[1.02]"
         />
       </div>
     </section>
