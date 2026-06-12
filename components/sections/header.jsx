@@ -2,10 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/i18n-provider";
-import Image from "next/image";
 import Logo from "../../public/images/logo.png";
 
 import {
@@ -23,24 +25,38 @@ const iconMap = {
 };
 
 export default function Header() {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+
   const { t, locale, toggleLocale } = useI18n();
+
+  const isHomePage = pathname === "/";
 
   const links = useMemo(
     () => [
-      { id: "home", label: t.nav.home, href: "#home", icon: "home" },
+      {
+        id: "home",
+        label: t.nav.home,
+        href: "/#home",
+        target: "#home",
+        icon: "home",
+      },
       {
         id: "marketplace",
         label: t.nav.marketplace,
-        href: "#marketplace",
+        href: "/#marketplace",
+        target: "#marketplace",
         icon: "marketplace",
       },
       {
         id: "features",
         label: t.nav.becomeMember,
-        href: "#features",
+        href: "/#features",
+        target: "#features",
         icon: "features",
       },
     ],
@@ -49,21 +65,31 @@ export default function Header() {
 
   useEffect(() => {
     let ticking = false;
+
     const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           setScrolled(window.scrollY > 100);
           ticking = false;
         });
+
         ticking = true;
       }
     };
+
     onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
+    if (!isHomePage) {
+      setActiveSection("");
+      return;
+    }
+
     const sections = links
       .map((item) => document.getElementById(item.id))
       .filter(Boolean);
@@ -90,17 +116,68 @@ export default function Header() {
     sections.forEach((section) => observer.observe(section));
 
     return () => observer.disconnect();
-  }, [links]);
+  }, [links, isHomePage]);
 
-  const handleNavClick = (e, href, id) => {
+  const handleLogoClick = (e) => {
+    setOpen(false);
+
+    if (!isHomePage) {
+      return;
+    }
+
     e.preventDefault();
 
-    const section = document.querySelector(href);
+    setActiveSection("home");
+
+    const section = document.querySelector("#home");
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+  const handleNavClick = (e, item) => {
+    setOpen(false);
+
+    if (!isHomePage) {
+      e.preventDefault();
+      router.push(item.href);
+      return;
+    }
+
+    e.preventDefault();
+
+    const section = document.querySelector(item.target);
 
     if (!section) return;
 
-    setActiveSection(id);
+    setActiveSection(item.id);
+
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const handleCartClick = (e) => {
     setOpen(false);
+
+    if (!isHomePage) {
+      e.preventDefault();
+      router.push("/#marketplace");
+      return;
+    }
+
+    e.preventDefault();
+
+    const section = document.querySelector("#marketplace");
+
+    if (!section) return;
+
+    setActiveSection("marketplace");
 
     section.scrollIntoView({
       behavior: "smooth",
@@ -118,7 +195,7 @@ export default function Header() {
       )}
     >
       <div className="container-dar flex h-[86px] items-center justify-between transition-all duration-500 md:h-[74px]">
-        <Link href="#home" onClick={(e) => handleNavClick(e, "#home", "home")}>
+        <Link href="/" onClick={handleLogoClick}>
           <Image
             src={Logo}
             width={89}
@@ -136,9 +213,9 @@ export default function Header() {
 
             return (
               <Link
-                key={item.label}
+                key={item.id}
                 href={item.href}
-                onClick={(e) => handleNavClick(e, item.href, item.id)}
+                onClick={(e) => handleNavClick(e, item)}
                 className={cn(
                   "group flex items-center gap-2 text-base font-medium transition-all duration-300 ease-out",
                   isActive
@@ -160,8 +237,8 @@ export default function Header() {
 
         <div className="hidden items-center gap-5 xl:gap-8 lg:flex">
           <Link
-            href="#marketplace"
-            onClick={(e) => handleNavClick(e, "#marketplace", "marketplace")}
+            href="/#marketplace"
+            onClick={handleCartClick}
             className={cn(
               "group flex items-center gap-2.5 text-base font-medium transition-all duration-300 ease-out",
               activeSection === "marketplace"
@@ -172,37 +249,6 @@ export default function Header() {
             <CartIcon className="transition-all duration-300 ease-out group-hover:scale-110" />
             {t.nav.myCart}
           </Link>
-
-          {/* <button
-            onClick={toggleLocale}
-            className="group relative flex h-[38px] w-[92px] items-center rounded-full border border-[#E5E7EB] bg-[#F8F8F8] p-1 text-[11px] font-bold uppercase text-[#151515] transition-all duration-300 hover:border-[#f15a24]/40 hover:bg-[#fff3ee]"
-            aria-label={t.common.language}
-          >
-            <span
-              className={cn(
-                "absolute top-1 h-[28px] w-[40px] rounded-full bg-[#f15a24] shadow-[0_6px_18px_rgba(241,90,36,.25)] transition-all duration-300 ease-out",
-                locale === "fr" ? "left-[47px]" : "left-1",
-              )}
-            />
-
-            <span
-              className={cn(
-                "relative z-10 flex h-[28px] w-[40px] items-center justify-center rounded-full transition-colors duration-300",
-                locale === "en" ? "text-white" : "text-[#151515]/60",
-              )}
-            >
-              EN
-            </span>
-
-            <span
-              className={cn(
-                "relative z-10 flex h-[28px] w-[40px] items-center justify-center rounded-full transition-colors duration-300",
-                locale === "fr" ? "text-white" : "text-[#151515]/60",
-              )}
-            >
-              FR
-            </span>
-          </button> */}
 
           <Button variant="outline" size="sm">
             {t.nav.signIn}
@@ -222,12 +268,14 @@ export default function Header() {
                 : "-translate-y-1.5",
             )}
           />
+
           <span
             className={cn(
               "absolute h-0.5 w-5 rounded-full bg-black transition-all duration-300",
               open ? "opacity-0" : "opacity-100",
             )}
           />
+
           <span
             className={cn(
               "absolute h-0.5 w-5 rounded-full bg-black transition-all duration-300",
@@ -254,9 +302,9 @@ export default function Header() {
 
             return (
               <Link
-                onClick={(e) => handleNavClick(e, item.href, item.id)}
-                key={item.label}
+                key={item.id}
                 href={item.href}
+                onClick={(e) => handleNavClick(e, item)}
                 className={cn(
                   "group flex items-center justify-between rounded-2xl px-3 py-3 text-sm font-medium transition-all duration-300 ease-out",
                   isActive

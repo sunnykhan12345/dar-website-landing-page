@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useI18n } from "@/components/i18n-provider";
 import { HeroButton } from "../ui/HeroButton";
@@ -37,8 +38,13 @@ export default function Hero() {
         </p>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-6 sm:flex-row">
-          <HeroButton variant="outline">{t.hero.start}</HeroButton>
-          <HeroButton>{t.hero.watch}</HeroButton>
+          <HeroButton variant="outline" asChild>
+            <Link href="/lead-captruring-form">{t.hero.start}</Link>
+          </HeroButton>
+
+          <HeroButton asChild>
+            <Link href="/lead-captruring-form">{t.hero.watch}</Link>
+          </HeroButton>
         </div>
 
         <motion.div
@@ -47,7 +53,6 @@ export default function Hero() {
           transition={{ duration: 0.55, delay: 0.12 }}
           className="relative mt-16 container-dar"
         >
-          {/* Figma shadow image - behind dashboard */}
           <div className="pointer-events-none absolute -inset-x-16 -bottom-20 -top-10 z-0 md:-inset-x-24 md:-bottom-28 md:-top-14">
             <Image
               src="/images/hero-dashbaord-shadow.png"
@@ -59,7 +64,6 @@ export default function Hero() {
             />
           </div>
 
-          {/* Dashboard image */}
           <div className="relative z-10 rounded-[36px] border-2 border-white/35 bg-white/60 p-3 shadow-[0_24px_70px_rgba(241,90,36,.15)] backdrop-blur-xl">
             <Image
               src="/images/hero-dashbaord.png"
