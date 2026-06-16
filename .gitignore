@@ -4,3 +4,6 @@ out
 dist
 .env
 .env.local
+# deploy keys (never commit)
+dar_deploy_key
+dar_deploy_key.pub
