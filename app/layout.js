@@ -5,6 +5,9 @@ import Footer from "@/components/sections/footer";
 export const metadata = {
   title: "DAR AI - Brand Builder",
   description: "Build a powerful brand presence instantly with AI.",
+  icons: {
+    icon: "/images/favicon.png",
+  },
 };
 export default function RootLayout({ children }) {
   return (
