@@ -77,13 +77,10 @@ export default function Footer() {
                 aria-label="Select language"
               >
                 <Icon name="Globe2" size={18} />
-
                 <span>{t.footer.changeLanguage}</span>
-
                 <span className="rounded-md bg-[#2B2B2D] px-2 py-1 text-[11px] font-bold uppercase text-white">
                   {locale}
                 </span>
-
                 <span
                   className={cn(
                     "transition-transform duration-300 ease-out",
@@ -115,12 +112,10 @@ export default function Footer() {
                   )}
                 >
                   <span>English</span>
-
                   {locale === "en" && (
                     <span className="h-2 w-2 rounded-full bg-[#EB6223]" />
                   )}
                 </button>
-
                 <button
                   type="button"
                   onClick={() => handleLanguageSelect("fr")}

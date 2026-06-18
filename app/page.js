@@ -6,6 +6,7 @@ import FastTeams from "@/components/sections/fast-teams";
 import Testimonials from "@/components/sections/testimonials";
 import AfterSwitchSection from "@/components/sections/AfterSwitchSection";
 import YesSection from "@/components/sections/YesSection";
+import PricingPackages from "@/components/sections/PricingPackages";
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
       <SellOnline />
       <FastTeams />
       <YesSection />
+      <PricingPackages />
       <AfterSwitchSection />
       <Steps />
       <Testimonials />
