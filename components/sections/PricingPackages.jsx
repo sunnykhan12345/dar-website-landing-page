@@ -1,7 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useI18n } from "@/components/i18n-provider";
+
+const LEAD_FORM_HREF = "/lead-captruring-form";
 
 function CheckIcon() {
   return (
@@ -64,17 +67,17 @@ export default function PricingPackages() {
             <span className="block text-[#F15A24]">{t.packages.accent}</span>
           </motion.h2>
 
-          <div className="mt-10 lg:mt-16 inline-flex items-center rounded-full bg-[#F6F6F6] p-1 cursor-pointer">
+          <div className="mt-10 inline-flex cursor-pointer items-center rounded-full bg-[#F6F6F6] p-1 lg:mt-16">
             <button
               type="button"
-              className="h-10 rounded-full bg-[#EB6223] px-8 text-base font-medium text-white shadow-sm transition hover:bg-[#df4f1d] cursor-pointer"
+              className="h-10 cursor-pointer rounded-full bg-[#EB6223] px-8 text-base font-medium text-white shadow-sm transition hover:bg-[#df4f1d]"
             >
               {t.packages.monthly}
             </button>
 
             <button
               type="button"
-              className="h-10 rounded-full px-7 text-sm font-semibold text-black transition hover:bg-white cursor-pointer"
+              className="h-10 cursor-pointer rounded-full px-7 text-sm font-semibold text-black transition hover:bg-white"
             >
               {t.packages.annual}
               <span className="text-[#F15A24]"> -30%</span>
@@ -82,7 +85,7 @@ export default function PricingPackages() {
           </div>
         </div>
 
-        <div className="mx-auto mt-14 lg:mt-20 grid max-w-[1200px] w-full grid-cols-1 gap-6 md:grid-cols-3 md:items-start">
+        <div className="mx-auto mt-14 grid w-full max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-3 md:items-start lg:mt-20">
           {plans.map((plan, index) => {
             const isPopular = plan.popular;
 
@@ -93,9 +96,9 @@ export default function PricingPackages() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.45, delay: index * 0.08 }}
-                className={`group relative flex min-h-[565px] flex-col overflow-hidden rounded-[20px] p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_60px_rgba(0,0,0,0.10)] ${
+                className={`group relative flex min-h-[620px] flex-col overflow-hidden rounded-[20px] p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_60px_rgba(0,0,0,0.10)] ${
                   isPopular
-                    ? "bg-[#FFF8F3] md:-mt-6 md:min-h-[610px]"
+                    ? "bg-[#FFF8F3] md:-mt-6 md:min-h-[665px]"
                     : "bg-[#F6F6F6]"
                 }`}
               >
@@ -105,7 +108,7 @@ export default function PricingPackages() {
                   </div>
                 )}
 
-                <h3 className="text-base lg:text-xl font-medium text-black">
+                <h3 className="text-base font-medium text-black lg:text-xl">
                   {plan.name}
                 </h3>
 
@@ -113,38 +116,45 @@ export default function PricingPackages() {
                   <span className="text-[36px] font-semibold leading-none tracking-[-1.4px] text-[#F15A24] sm:text-[46px]">
                     {plan.price}
                   </span>
-                  <span className="pb-1 text-base lg:text-[22px] font-semibold text-[#EB6223]">
+
+                  <span className="pb-1 text-base font-semibold text-[#EB6223] lg:text-[22px]">
                     /{t.packages.monthShort}
                   </span>
                 </div>
-                <p className="mt-6 min-h-[48px] text-base font-medium leading-6 text-black">
+
+                <p className="mt-6 min-h-[72px] text-base font-medium leading-6 text-black">
                   {plan.description}
                 </p>
-                <div className="mt-8 mb-6 h-px w-full bg-[#D9DBDF]" />
+
+                <div className="mb-6 mt-8 h-px w-full bg-[#D9DBDF]" />
+
                 <ul className="space-y-5">
                   {plan.features.map((feature) => (
                     <li
                       key={feature.label}
-                      className="flex items-center gap-5 text-sm font-medium leading-5 text-black"
+                      className={`flex items-center gap-5 text-sm font-medium leading-5 ${
+                        feature.included ? "text-black" : "text-black/55"
+                      }`}
                     >
                       {feature.included ? <CheckIcon /> : <CrossIcon />}
                       <span>{feature.label}</span>
                     </li>
                   ))}
                 </ul>
+
                 <div className="mt-6 h-px w-full bg-[#E5E7EB]" />
 
                 <div className="mt-auto pt-6">
-                  <button
-                    type="button"
-                    className={`h-12 rounded-[48px] px-8 text-lg font-semibold transition-all duration-300 ${
+                  <Link
+                    href={LEAD_FORM_HREF}
+                    className={`inline-flex h-12 items-center justify-center rounded-[48px] px-8 text-lg font-semibold transition-all duration-300 ${
                       isPopular
-                        ? "bg-[#EB6223] text-white hover:bg-[#EB6223] hover:shadow-[0_12px_28px_rgba(241,90,36,0.28)]"
+                        ? "bg-[#EB6223] text-white hover:bg-[#df4f1d] hover:shadow-[0_12px_28px_rgba(241,90,36,0.28)]"
                         : "border border-[#EB6223] bg-transparent text-[#EB6223] hover:bg-[#EB6223] hover:text-white hover:shadow-[0_12px_28px_rgba(241,90,36,0.18)]"
                     }`}
                   >
                     {plan.cta}
-                  </button>
+                  </Link>
                 </div>
               </motion.article>
             );
