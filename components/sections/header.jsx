@@ -45,11 +45,17 @@ export default function Header() {
         target: "#home",
         icon: "home",
       },
+      // {
+      //   id: "marketplace",
+      //   label: t.nav.marketplace,
+      //   href: "/#marketplace",
+      //   target: "/marketplace",
+      //   icon: "marketplace",
+      // },
       {
         id: "marketplace",
         label: t.nav.marketplace,
-        href: "/#marketplace",
-        target: "#marketplace",
+        href: "/marketplace",
         icon: "marketplace",
       },
       {
