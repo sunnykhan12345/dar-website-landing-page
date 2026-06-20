@@ -15,14 +15,11 @@ import {
 export default function MarketplaceShell({ t, products, services, stores }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const tab = searchParams.get("tab") || "all";
-
   const setTab = (nextTab) => {
     if (nextTab === "all") router.push("/marketplace");
     else router.push(`/marketplace?tab=${nextTab}`);
   };
-
   const productRows = useMemo(
     () => Array.from({ length: 6 }).flatMap(() => products),
     [products],
@@ -90,12 +87,10 @@ export default function MarketplaceShell({ t, products, services, stores }) {
               </button>
             </div>
           </div>
-
           <div className="mt-5 flex gap-4 overflow-x-auto hide-scrollbar">
             <span className="shrink-0 py-2.5 text-base font-medium text-[var(--orange)]">
               {t.marketplace.browseCategories}
             </span>
-
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -107,7 +102,6 @@ export default function MarketplaceShell({ t, products, services, stores }) {
           </div>
         </div>
       </section>
-
       {tab === "all" && (
         <section className="container-dar space-y-9">
           <HomeRow
@@ -115,14 +109,12 @@ export default function MarketplaceShell({ t, products, services, stores }) {
             items={products}
             href="/marketplace?tab=products"
           />
-
           <HomeRow
             title={t.marketplace.topBookingServices}
             items={services}
             href="/marketplace?tab=services"
           />
-
-          {/* <div>
+          <div>
             <SectionTitle
               title={t.marketplace.topStores}
               href="/marketplace?tab=stores"
@@ -132,11 +124,11 @@ export default function MarketplaceShell({ t, products, services, stores }) {
                 <StoreCard key={store.id} store={store} />
               ))}
             </div>
-          </div> */}
+          </div>
         </section>
       )}
 
-      {/* {tab === "products" && (
+      {tab === "products" && (
         <ListingLayout
           title={t.marketplace.bestSellingProducts}
           countText={t.marketplace.results.replace("{{count}}", "345")}
@@ -163,7 +155,7 @@ export default function MarketplaceShell({ t, products, services, stores }) {
             </p>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex gap-[44px] overflow-x-auto px-12 py-10">
             {Array.from({ length: 4 })
               .flatMap(() => stores)
               .map((store, index) => (
@@ -171,7 +163,7 @@ export default function MarketplaceShell({ t, products, services, stores }) {
               ))}
           </div>
         </section>
-      )} */}
+      )}
     </main>
   );
 }
@@ -190,7 +182,7 @@ function SectionTitle({ title, href }) {
   );
 }
 
-function HomeRow({ title, items, href }) {
+function HomeRow({ title, items, href}) {
   return (
     <div>
       <SectionTitle title={title} href={href} />
@@ -208,7 +200,6 @@ function ListingLayout({ title, countText, mode, items }) {
     <section className="container-dar">
       <div className="flex gap-8">
         <FiltersSidebar mode={mode} />
-
         <div className="min-w-0 flex-1">
           <div className="mb-5 flex items-center justify-between">
             <h2 className="text-xl font-bold">{title}</h2>
