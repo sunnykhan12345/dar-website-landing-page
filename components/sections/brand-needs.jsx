@@ -1,8 +1,6 @@
 "use client";
-
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/i18n-provider";
-
 import {
   CommercialOffersIcon,
   LandingPageIcon,
@@ -14,7 +12,6 @@ import {
   LandingWebsiteIcon,
   AiLogoGenerationIcon,
 } from "@/public/icons/icon";
-
 const icons = [
   CommercialOffersIcon,
   LandingPageIcon,
@@ -26,10 +23,8 @@ const icons = [
   LandingWebsiteIcon,
   AiLogoGenerationIcon,
 ];
-
 export default function BrandNeeds() {
   const { t } = useI18n();
-
   return (
     <section id="features" className="section-pad bg-white">
       <div className="container-dar">
@@ -38,12 +33,10 @@ export default function BrandNeeds() {
           <br />
           <span className="orange">{t.brandNeeds.accent}</span>
         </h2>
-
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3">
           {t.brandNeeds.items.map((it, i) => {
             const CardIcon = icons[i];
             const isActiveCard = i === 1;
-
             return (
               <div
                 key={it[0] + i}
@@ -60,7 +53,6 @@ export default function BrandNeeds() {
                 >
                   <CardIcon className="h-8 w-8 transition-all duration-300 ease-out group-hover:scale-110" />
                 </div>
-
                 <h3
                   className={cn(
                     "text-xl font-semibold transition-colors duration-300",
@@ -70,7 +62,6 @@ export default function BrandNeeds() {
                 >
                   {it[0]}
                 </h3>
-
                 <p className="mt-6 text-lg font-normal leading-5 text-black/80">
                   {it[1]}
                 </p>

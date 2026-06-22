@@ -145,7 +145,6 @@ export default function MarketplaceShell({ t, products, services, stores }) {
           items={serviceRows}
         />
       )}
-
       {tab === "stores" && (
         <section className="container-dar">
           <div className="mb-5 flex items-center justify-between">
@@ -154,7 +153,6 @@ export default function MarketplaceShell({ t, products, services, stores }) {
               {t.marketplace.itemsFound.replace("{{count}}", "493")}
             </p>
           </div>
-
           <div className="flex gap-[44px] overflow-x-auto px-12 py-10">
             {Array.from({ length: 4 })
               .flatMap(() => stores)
@@ -198,7 +196,7 @@ function HomeRow({ title, items, href}) {
 function ListingLayout({ title, countText, mode, items }) {
   return (
     <section className="container-dar">
-      <div className="flex gap-8">
+      <div className="flex gap-6">
         <FiltersSidebar mode={mode} />
         <div className="min-w-0 flex-1">
           <div className="mb-5 flex items-center justify-between">

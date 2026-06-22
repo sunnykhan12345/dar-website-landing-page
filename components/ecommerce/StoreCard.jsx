@@ -33,9 +33,10 @@ export default function StoreCard({ store }) {
           <span className="rounded-[8px] h-9 bg-[var(--orange-soft)] px-3 py-2 font-semibold text-xs text-[var(--orange)]">
             {store.category}
           </span>
-          <span className="rounded-lg bg-[var(--orange)] h-9 w-9 flex items-center justify-center px-3 py-2 text-white">
+          <span className="rounded-lg bg-[var(--orange)] h-9 w-9 flex items-center justify-center  text-white">
             <MoreIcon />
           </span>
+          
         </div>
       </div>
     </Link>
