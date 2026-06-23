@@ -125,11 +125,10 @@ export default function DetailPage({ item, related = [], type = "product" }) {
                       ? "Booking Service"
                       : "The Hamzito Store"}
                   </p>
-                  </p>
                 </div>
                 <div className="flex space-x-2 items-center">
                   <div className="w-9 h-9 bg-[#F2F2F2] rounded-[6px] flex items-center justify-center">d</div>
-                  <div className="w-9 h-9 bg-[#F2F2F2] rounded-[6px] flex items-center justify-center">s</div>
+                  <div className="w-9 h-9 bg-[#F2F2F2] rounded-[6px] flex items-center">s</div>
                 </div>
               </div>
 
