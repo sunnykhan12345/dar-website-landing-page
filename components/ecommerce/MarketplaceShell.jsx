@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "./ProductCard";
 import StoreCard from "./StoreCard";
@@ -15,19 +16,57 @@ import {
 export default function MarketplaceShell({ t, products, services, stores }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState("");
+
   const tab = searchParams.get("tab") || "all";
+
   const setTab = (nextTab) => {
     if (nextTab === "all") router.push("/marketplace");
     else router.push(`/marketplace?tab=${nextTab}`);
   };
+
+  const searchText = searchQuery.trim().toLowerCase();
+
+  const matchesSearch = (item) => {
+    if (!searchText) return true;
+
+    return [
+      item.title,
+      item.name,
+      item.category,
+      item.description,
+      item.location,
+      item.distance,
+      item.price,
+    ]
+      .filter(Boolean)
+      .some((value) => String(value).toLowerCase().includes(searchText));
+  };
+
+  const filteredProducts = useMemo(
+    () => products.filter(matchesSearch),
+    [products, searchText],
+  );
+
+  const filteredServices = useMemo(
+    () => services.filter(matchesSearch),
+    [services, searchText],
+  );
+
+  const filteredStores = useMemo(
+    () => stores.filter(matchesSearch),
+    [stores, searchText],
+  );
+
   const productRows = useMemo(
-    () => Array.from({ length: 6 }).flatMap(() => products),
-    [products],
+    () => Array.from({ length: 6 }).flatMap(() => filteredProducts),
+    [filteredProducts],
   );
 
   const serviceRows = useMemo(
-    () => Array.from({ length: 6 }).flatMap(() => services),
-    [services],
+    () => Array.from({ length: 6 }).flatMap(() => filteredServices),
+    [filteredServices],
   );
 
   const categories =
@@ -40,6 +79,8 @@ export default function MarketplaceShell({ t, products, services, stores }) {
           <div className="flex flex-col gap-4 lg:gap-6 lg:flex-row">
             <div className="relative flex-1">
               <input
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
                 placeholder={t.marketplace.searchPlaceholder}
                 className="h-14 w-full rounded-[12px] bg-white px-12 text-sm outline-none text-[#50565D]"
               />
@@ -87,10 +128,12 @@ export default function MarketplaceShell({ t, products, services, stores }) {
               </button>
             </div>
           </div>
+
           <div className="mt-5 flex gap-4 overflow-x-auto hide-scrollbar">
             <span className="shrink-0 py-2.5 text-base font-medium text-[var(--orange)]">
               {t.marketplace.browseCategories}
             </span>
+
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -102,28 +145,43 @@ export default function MarketplaceShell({ t, products, services, stores }) {
           </div>
         </div>
       </section>
+
       {tab === "all" && (
         <section className="container-dar space-y-9">
           <HomeRow
             title={t.marketplace.bestSellingProducts}
-            items={products}
+            items={filteredProducts}
             href="/marketplace?tab=products"
           />
+
           <HomeRow
             title={t.marketplace.topBookingServices}
-            items={services}
+            items={filteredServices}
             href="/marketplace?tab=services"
           />
+
           <div>
             <SectionTitle
               title={t.marketplace.topStores}
               href="/marketplace?tab=stores"
             />
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-              {stores.map((store) => (
-                <StoreCard key={store.id} store={store} />
-              ))}
-            </div>
+
+            {filteredStores.length ? (
+              <div className="overflow-x-auto hide-scrollbar">
+                <div className="flex gap-5 pb-1">
+                  {filteredStores.map((store, index) => (
+                    <div
+                      key={`${store.id}-${index}`}
+                      className="w-[215px] shrink-0 sm:w-[225px] lg:w-[255px]"
+                    >
+                      <StoreCard store={store} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <NoResults />
+            )}
           </div>
         </section>
       )}
@@ -131,7 +189,10 @@ export default function MarketplaceShell({ t, products, services, stores }) {
       {tab === "products" && (
         <ListingLayout
           title={t.marketplace.bestSellingProducts}
-          countText={t.marketplace.results.replace("{{count}}", "345")}
+          countText={t.marketplace.results.replace(
+            "{{count}}",
+            String(filteredProducts.length),
+          )}
           mode="products"
           items={productRows}
         />
@@ -140,26 +201,44 @@ export default function MarketplaceShell({ t, products, services, stores }) {
       {tab === "services" && (
         <ListingLayout
           title={t.marketplace.topBookingServices}
-          countText={t.marketplace.results.replace("{{count}}", "345")}
+          countText={t.marketplace.results.replace(
+            "{{count}}",
+            String(filteredServices.length),
+          )}
           mode="services"
           items={serviceRows}
         />
       )}
+
       {tab === "stores" && (
         <section className="container-dar">
           <div className="mb-5 flex items-center justify-between">
             <h2 className="text-xl font-bold">{t.marketplace.topStores}</h2>
             <p className="text-sm">
-              {t.marketplace.itemsFound.replace("{{count}}", "493")}
+              {t.marketplace.itemsFound.replace(
+                "{{count}}",
+                String(filteredStores.length),
+              )}
             </p>
           </div>
-          <div className="flex gap-[44px] overflow-x-auto px-12 py-10">
-            {Array.from({ length: 4 })
-              .flatMap(() => stores)
-              .map((store, index) => (
-                <StoreCard key={`${store.id}-${index}`} store={store} />
-              ))}
-          </div>
+          {filteredStores.length ? (
+            <div className="overflow-x-auto hide-scrollbar">
+              <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 gap-4 pb-1">
+                {Array.from({ length: 4 })
+                  .flatMap(() => filteredStores)
+                  .map((store, index) => (
+                    <div
+                      key={`${store.id}-${index}`}
+                      className="shrink-0"
+                    >
+                      <StoreCard store={store} />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ) : (
+            <NoResults />
+          )}
         </section>
       )}
     </main>
@@ -180,15 +259,27 @@ function SectionTitle({ title, href }) {
   );
 }
 
-function HomeRow({ title, items, href}) {
+function HomeRow({ title, items, href }) {
   return (
     <div>
       <SectionTitle title={title} href={href} />
-      <div className="grid gap-5 overflow-hidden grid-cols-2 lg:grid-cols-5">
-        {items.slice(0, 5).map((item) => (
-          <ProductCard key={`${item.type}-${item.id}`} item={item} />
-        ))}
-      </div>
+
+      {items.length ? (
+        <div className="overflow-x-auto hide-scrollbar">
+          <div className="flex gap-5 pb-1">
+            {items.slice(0, 8).map((item, index) => (
+              <div
+                key={`${item.type}-${item.id}-${index}`}
+                className="w-[215px] shrink-0 sm:w-[225px] lg:w-[255px]"
+              >
+                <ProductCard item={item} />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <NoResults />
+      )}
     </div>
   );
 }
@@ -198,22 +289,39 @@ function ListingLayout({ title, countText, mode, items }) {
     <section className="container-dar">
       <div className="flex gap-6">
         <FiltersSidebar mode={mode} />
+
         <div className="min-w-0 flex-1">
           <div className="mb-5 flex items-center justify-between">
             <h2 className="text-xl font-bold">{title}</h2>
             <p className="text-sm">{countText}</p>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            {items.map((item, index) => (
-              <ProductCard
-                key={`${item.type}-${item.id}-${index}`}
-                item={item}
-              />
-            ))}
-          </div>
+          {items.length ? (
+            <div className="overflow-x-auto hide-scrollbar">
+              <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4  pb-1">
+                {items.map((item, index) => (
+                  <div
+                    key={`${item.type}-${item.id}-${index}`}
+                    className="shrink-0"
+                  >
+                    <ProductCard item={item} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <NoResults />
+          )}
         </div>
       </div>
     </section>
+  );
+}
+
+function NoResults() {
+  return (
+    <div className="rounded-[12px] bg-white px-5 py-10 text-center text-sm font-medium text-[#50565D]">
+      No results found.
+    </div>
   );
 }

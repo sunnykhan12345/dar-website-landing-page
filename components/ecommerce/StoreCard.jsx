@@ -16,7 +16,7 @@ export default function StoreCard({ store }) {
         <img
           src={store.logo}
           alt={`${store.title} logo`}
-          className="absolute bottom-[-10px] left-4 h-15 w-15  object-cover"
+          className="absolute bottom-[-28px] left-4 h-15 w-15  object-cover"
         />
       </div>
       <div className="p-4 pt-8">
