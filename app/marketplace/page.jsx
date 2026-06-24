@@ -1,7 +1,7 @@
 import MarketplaceShell from "@/components/ecommerce/MarketplaceShell";
 import { getDictionary } from "@/lib/i18n";
 import { getMarketplaceData } from "@/lib/commerce-api";
-
+import { Suspense } from "react";
 export const metadata = {
   title: "Marketplace | DAR AI",
   description:
@@ -13,11 +13,13 @@ export default async function MarketplacePage() {
   const t = getDictionary("en");
 
   return (
-    <MarketplaceShell
-      t={t}
-      products={data.products}
-      services={data.services}
-      stores={data.stores}
-    />
+    <Suspense fallback={<div>Loading...</div>}>
+      <MarketplaceShell
+        t={t}
+        products={data.products}
+        services={data.services}
+        stores={data.stores}
+      />
+    </Suspense>
   );
 }
