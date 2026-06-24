@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import ProductCard from "./ProductCard";
 import { useCart } from "@/lib/cart-store";
+import { DownlaodIcon, HeartIcon } from "@/public/icons/icon";
 
 const colors = [
   { name: "Black", value: "#000000" },
@@ -127,39 +128,45 @@ export default function DetailPage({ item, related = [], type = "product" }) {
                   </p>
                 </div>
                 <div className="flex space-x-2 items-center">
-                  <div className="w-9 h-9 bg-[#F2F2F2] rounded-[6px] flex items-center justify-center">d</div>
-                  <div className="w-9 h-9 bg-[#F2F2F2] rounded-[6px] flex items-center">s</div>
+                  <div className="w-9 h-9 bg-[#F2F2F2] rounded-[6px] flex items-center justify-center hover:opacity-55 duration-300 ease-in-out">
+                    <DownlaodIcon />
+                  </div>
+                  <div className="w-9 h-9 bg-[#F2F2F2] rounded-[6px] flex items-center hover:opacity-55 duration-300 ease-in-out">
+                    <HeartIcon />
+                  </div>
                 </div>
               </div>
 
-              <h1 className="text-2xl font-semibold leading-tight text-[#19191A] lg:text-[28px]">
+              <h1 className="text-2xl mt-3 font-semibold leading-tight text-[#19191A] lg:text-[28px]">
                 {item.title}
               </h1>
 
-              <div className="mt-6 flex flex-wrap items-center gap-4 border-b border-dashed border-[#D9D9D9] pb-6">
+              <div className="mt-5 flex flex-wrap items-center gap-4 border-b border-dashed border-[#A3A3A3] pb-6">
                 {item.oldPrice ? (
                   <span className="text-base text-[#8A8A8A] line-through">
                     ${item.oldPrice}.00
                   </span>
                 ) : null}
 
-                <span className="text-[28px] font-semibold text-[var(--orange)]">
+                <span className="lg:text-[28px] text-lg font-semibold text-[var(--orange)]">
                   ${item.price}.00
                 </span>
 
-                <span className="ml-auto text-sm font-semibold">
+                <span className="ml-auto text-sm lg:text-base font-medium">
                   1,238 Sold
                 </span>
 
-                <span className="text-sm">
-                  <span className="text-yellow-400">★</span>{" "}
+                <span className="text-base font-medium">
+                  <span className="text-yellow-400 text-2xl">★</span>{" "}
                   {item.rating || 4.9} ({item.reviews || 23})
                 </span>
               </div>
 
               <div className="mt-6">
-                <h3 className="text-base font-semibold">Description:</h3>
-                <p className="mt-3 max-w-xl text-sm leading-6 text-[#50565D]">
+                <h3 className="text-base lg:text-lg font-semibold">
+                  Description:
+                </h3>
+                <p className="mt-2 max-w-xl text-sm leading-6 text-[#666666]">
                   {item.description ||
                     "Premium quality marketplace item available with reliable checkout and delivery."}{" "}
                   <span className="text-[var(--orange)]">See More...</span>
@@ -167,20 +174,20 @@ export default function DetailPage({ item, related = [], type = "product" }) {
               </div>
 
               <div className="mt-8">
-                <p className="text-base text-[#50565D]">
+                <p className="text-base lg:text-lg text-[#50565D]">
                   Color:{" "}
                   <span className="font-semibold text-[#19191A]">
                     {selectedColor.name}
                   </span>
                 </p>
 
-                <div className="mt-3 flex gap-3">
+                <div className="mt-2 flex gap-3">
                   {colors.map((color) => (
                     <button
                       key={color.name}
                       type="button"
                       onClick={() => setSelectedColor(color)}
-                      className={`h-8 w-[64px] rounded-[6px] border p-1 ${
+                      className={`h-8 w-[64px] rounded-[8px] border p-1 ${
                         selectedColor.name === color.name
                           ? "border-[var(--orange)]"
                           : "border-transparent"
@@ -197,7 +204,7 @@ export default function DetailPage({ item, related = [], type = "product" }) {
 
               <div className="mt-8">
                 <div className="flex items-center justify-between">
-                  <p className="text-base text-[#50565D]">
+                  <p className="text-base lg:text-lg text-[#50565D]">
                     Size:{" "}
                     <span className="font-semibold text-[#19191A]">
                       {selectedSize}
@@ -205,22 +212,22 @@ export default function DetailPage({ item, related = [], type = "product" }) {
                   </p>
                   <button
                     type="button"
-                    className="text-sm font-semibold text-[#2563EB] underline"
+                    className="text-sm lg:text-base font-medium text-[#1A68ED] underline"
                   >
                     View Size Chart
                   </button>
                 </div>
 
-                <div className="mt-4 grid grid-cols-6 gap-3">
+                <div className="mt-3 grid grid-cols-6 gap-3">
                   {sizes.map((size) => (
                     <button
                       key={size}
                       type="button"
                       onClick={() => setSelectedSize(size)}
-                      className={`h-12 rounded-[6px] border text-sm font-semibold ${
+                      className={`h-12 rounded-[8px] border text-sm lg:text-lg font-semibold cursor-pointer ${
                         selectedSize === size
                           ? "border-[var(--orange)] text-[var(--orange)]"
-                          : "border-[#E5E7EB] text-[#19191A]"
+                          : "border-[#D9DBDF] text-[#19191A]"
                       }`}
                     >
                       {size}
@@ -229,11 +236,11 @@ export default function DetailPage({ item, related = [], type = "product" }) {
                 </div>
               </div>
 
-              <div className="mt-10 grid gap-5 sm:grid-cols-2">
+              <div className="mt-10 grid lg:gap-6 gap-4 sm:grid-cols-2">
                 <button
                   type="button"
                   onClick={handleAddToCart}
-                  className="h-12 rounded-[8px] bg-black text-sm font-semibold text-white transition hover:opacity-90"
+                  className="h-12 rounded-[12px] bg-black text-sm lg:text-base font-medium cursor-pointer text-white transition hover:opacity-90"
                 >
                   Add To Cart
                 </button>
@@ -247,33 +254,35 @@ export default function DetailPage({ item, related = [], type = "product" }) {
                 </button>
               </div>
 
-              <p className="mt-8 text-xs font-semibold">Delivery T&C</p>
+              <p className="mt-5 text-xs lg:text-sm font-medium">
+                Delivery T&C
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       <section className="container-dar">
-        <div className="rounded-[12px] bg-white p-5 lg:p-6">
+        <div className="rounded-[12px] bg-white p-5">
           <div className="grid gap-8 lg:grid-cols-[220px_1fr]">
             <div>
               <h2 className="text-[32px] font-semibold">4.8 Star</h2>
-              <p className="mt-1 text-sm font-medium">out of 5 star</p>
-              <p className="mt-6 text-3xl text-yellow-400">★★★★★</p>
-              <p className="mt-4 text-sm">based on 1,25,983 reviews</p>
+              <p className="mt-1 text-base font-medium">out of 5 star</p>
+              <p className="mt-3 text-3xl text-yellow-400">★★★★★</p>
+              <p className="mt-1 text-sm">based on 1,25,983 reviews</p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-2">
               {[5, 4, 3, 2, 1].map((star, index) => (
                 <div
                   key={star}
                   className="grid grid-cols-[35px_18px_1fr_45px] items-center gap-3 text-sm"
                 >
                   <span>{star}.0</span>
-                  <span className="text-yellow-400">★</span>
-                  <div className="h-[6px] overflow-hidden rounded-full bg-[#E5E7EB]">
+                  <span className="text-[#FEC403] text-lg">★</span>
+                  <div className="h-[8px] overflow-hidden rounded-full bg-[#E5E7EB]">
                     <div
-                      className="h-full rounded-full bg-yellow-400"
+                      className="h-full rounded-full bg-[#FEC403]"
                       style={{
                         width:
                           index === 0
@@ -286,7 +295,7 @@ export default function DetailPage({ item, related = [], type = "product" }) {
                       }}
                     />
                   </div>
-                  <span className="text-right font-semibold">
+                  <span className="text-right font-medium">
                     {index === 0
                       ? "2823"
                       : index === 1
@@ -299,25 +308,25 @@ export default function DetailPage({ item, related = [], type = "product" }) {
               ))}
             </div>
           </div>
-
-          <h3 className="mt-10 text-base font-semibold">Product Reviews</h3>
-
-          <div className="mt-5 divide-y divide-[#E5E7EB]">
+          <h3 className="mt-10 text-base lg:text-lg font-semibold">
+            Product Reviews
+          </h3>
+          <div className="mt-3 divide-y divide-[#E5E7EB]">
             {reviews.map((review) => (
               <div key={review.name} className="py-5">
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start justify-between gap-2.5">
                   <div className="flex items-center gap-3">
-                    <span className="grid h-8 w-8 place-items-center rounded-full bg-[#FFF3EE] text-xs font-semibold text-[var(--orange)]">
+                    <span className="grid h-10 w-10 place-items-center rounded-full bg-[#F2F2F2] text-xs font-semibold text-[var(--orange)]">
                       ER
                     </span>
-                    <p className="font-semibold">{review.name}</p>
+                    <p className="font-medium">{review.name}</p>
                   </div>
-                  <span className="rounded-[6px] bg-[#F6F6F6] px-3 py-2 text-xs text-[#50565D]">
+                  <span className="rounded-[8px] bg-[#F6F6F6] px-3 py-2 text-xs lg:text-sm text-[#50565D]">
                     {review.date}
                   </span>
                 </div>
 
-                <p className="mt-3 text-xl text-yellow-400">★★★★★</p>
+                <p className="mt-3 text-2xl text-[#FEC403]">★★★★★</p>
                 <p className="mt-2 text-sm leading-6 text-[#50565D]">
                   {review.text}
                 </p>
@@ -341,7 +350,7 @@ export default function DetailPage({ item, related = [], type = "product" }) {
           <h2 className="text-xl font-semibold">
             {type === "service" ? "Related Services" : "Related Products"}
           </h2>
-          <span className="text-sm font-medium text-[var(--orange)]">
+          <span className="text-sm lg:text-base font-medium text-[var(--orange)] cursor-pointer hover:underline">
             View All
           </span>
         </div>

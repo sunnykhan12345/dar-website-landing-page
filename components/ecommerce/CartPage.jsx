@@ -1,69 +1,3 @@
-// import Link from "next/link";
-
-// export default function CartPage() {
-//   return (
-//     <main className="bg-[#f6f6f6] py-12">
-//       <section className="container-dar grid gap-8 lg:grid-cols-[1fr_360px]">
-//         <div className="rounded-[16px] bg-white p-6">
-//           <h1 className="mb-6 text-2xl font-bold">My Cart</h1>
-
-//           {[1, 2].map((item) => (
-//             <div
-//               key={item}
-//               className="flex gap-4 border-b py-5 last:border-b-0"
-//             >
-//               <img
-//                 src="/images/products/watch.png"
-//                 alt=""
-//                 className="h-24 w-24 rounded-xl object-cover"
-//               />
-
-//               <div className="flex-1">
-//                 <h3 className="font-semibold">Long Sleeve Overshirt</h3>
-//                 <p className="mt-1 text-sm text-[#777]">Color: Khaki</p>
-//                 <p className="mt-3 font-bold text-[var(--orange)]">$45</p>
-//               </div>
-
-//               <div className="flex h-10 items-center rounded-lg border">
-//                 <button className="px-3">-</button>
-//                 <span className="px-3">1</span>
-//                 <button className="px-3">+</button>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-
-//         <aside className="rounded-[16px] bg-white p-6">
-//           <h2 className="text-xl font-bold">Order Summary</h2>
-
-//           <div className="mt-6 space-y-4 text-sm">
-//             <div className="flex justify-between">
-//               <span>Subtotal</span>
-//               <span>$90</span>
-//             </div>
-
-//             <div className="flex justify-between">
-//               <span>Shipping</span>
-//               <span>$10</span>
-//             </div>
-
-//             <div className="flex justify-between border-t pt-4 text-lg font-bold">
-//               <span>Total</span>
-//               <span>$100</span>
-//             </div>
-//           </div>
-
-//           <Link
-//             href="/checkout"
-//             className="mt-6 block rounded-[10px] bg-[var(--orange)] py-4 text-center text-sm font-bold text-white"
-//           >
-//             Proceed To Checkout
-//           </Link>
-//         </aside>
-//       </section>
-//     </main>
-//   );
-// }
 "use client";
 
 import Link from "next/link";
@@ -74,22 +8,20 @@ export default function CartPage() {
 
   if (!items.length) {
     return (
-      <main className="bg-[#f6f6f6] py-8 lg:py-10">
+      <main className="bg-[#f6f6f6] py-8">
         <section className="container-dar">
-          <div className="flex min-h-[430px] flex-col items-center justify-center rounded-[14px] bg-white px-6 py-16 text-center">
+          <div className="flex min-h-[430px] flex-col items-center justify-center rounded-[12px] bg-white px-6 py-16 text-center">
             <img
               src="/images/empty-cart.png"
               alt=""
-              className="mb-8 h-[210px] w-[260px] object-contain opacity-70"
+              className="mb-8 h-[230px] w-[294px] object-contain opacity-70"
             />
 
-            <h1 className="text-2xl font-semibold">
-              Your Shopping Cart Is Empty
-            </h1>
+            <h1 className="text-xl font-medium">Your Shopping Cart Is Empty</h1>
 
             <Link
               href="/marketplace"
-              className="mt-8 rounded-[10px] bg-[var(--orange)] px-8 py-4 text-base font-semibold text-white"
+              className="mt-8 rounded-[12px] bg-[var(--orange)] px-8 py-4 text-base font-medium text-white cursor-pointer hover:opacity-70 ease-in-out duration-300"
             >
               Start Shopping Now
             </Link>
@@ -102,19 +34,19 @@ export default function CartPage() {
   return (
     <main className="bg-[#f6f6f6] py-8 lg:py-10">
       <section className="container-dar grid gap-6 lg:grid-cols-[1fr_360px]">
-        <div className="rounded-[14px] bg-white p-5 lg:p-6">
-          <h1 className="mb-6 text-xl font-semibold">Order Summary</h1>
+        <div className="rounded-[12px] bg-white p-5">
+          <h1 className="mb-6 text-lg font-semibold">Order Summary</h1>
 
           <div className="space-y-5">
             {items.map((item) => (
               <div
                 key={item.cartKey}
-                className="grid gap-4 rounded-[12px] bg-[#F6F6F6] p-4 md:grid-cols-[118px_1fr_auto]"
+                className="grid gap-4 rounded-[12px] bg-[#F6F6F6] p-3 md:grid-cols-[118px_1fr_auto]"
               >
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="h-[118px] w-[118px] rounded-[10px] object-cover"
+                  className="h-[131px]! w-[131px]! rounded-xl object-cover"
                 />
 
                 <div>
@@ -131,29 +63,29 @@ export default function CartPage() {
                 </div>
 
                 <div className="flex flex-col items-end justify-between gap-5">
-                  <div className="flex h-9 items-center overflow-hidden rounded-[6px] border border-[#E5E7EB] bg-white">
+                  <div className="flex h-9 items-center overflow-hidden rounded-[6px] border border-[#E5E7EB] p-1">
                     <button
                       type="button"
                       onClick={() => decreaseItem(item.cartKey)}
-                      className="grid h-full w-10 place-items-center text-xl"
+                      className="grid h-full w-10 place-items-center text-xl bg-[#F2F2F2] w-6 h-6 rounded-[6px] cursor-pointer"
                     >
                       −
                     </button>
 
-                    <span className="grid h-full w-12 place-items-center font-semibold">
+                    <span className="grid h-full w-12 place-items-center font-semibold text-lg">
                       {item.quantity}
                     </span>
 
                     <button
                       type="button"
                       onClick={() => increaseItem(item.cartKey)}
-                      className="grid h-full w-10 place-items-center text-xl"
+                      className="grid h-full w-10 place-items-center text-xl bg-[#F2F2F2] w-6 h-6 rounded-[6px] cursor-pointer"
                     >
                       +
                     </button>
                   </div>
 
-                  <p className="text-xl font-semibold text-[var(--orange)]">
+                  <p className="text-lg font-semibold text-[var(--orange)]">
                     {formatPrice(item.price * item.quantity)}
                   </p>
                 </div>
@@ -163,9 +95,8 @@ export default function CartPage() {
         </div>
 
         <aside className="space-y-6">
-          <div className="rounded-[14px] bg-white p-5 lg:p-6">
-            <h2 className="mb-6 text-xl font-semibold">Price Details</h2>
-
+          <div className="rounded-[12px] bg-white p-5">
+            <h2 className="mb-6 text-lg font-semibold">Price Details</h2>
             <div className="space-y-4">
               {items.map((item) => (
                 <div
@@ -186,17 +117,17 @@ export default function CartPage() {
                 </span>
               </div>
 
-              <div className="flex justify-between border-t border-[#E5E7EB] pt-5 text-base font-semibold">
+              <div className="flex justify-between border-t border-[#E5E7EB] pt-5 text-base font-medium">
                 <span>Total (USD)</span>
-                <span className="text-[var(--orange)]">
+                <span className="text-[var(--orange)] font-semibold">
                   {formatPrice(totals.total)}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="rounded-[14px] bg-white p-5 lg:p-6">
-            <h2 className="mb-6 text-xl font-semibold">Cancellation Policy</h2>
+          <div className="rounded-[12px] bg-white p-5">
+            <h2 className="mb-6 text-lg font-semibold">Cancellation Policy</h2>
             <p className="text-base leading-7 text-[#50565D]">
               Free cancellation before 14:00 on 17 Aug. Cancel before 24 Aug for
               a partial refund.
@@ -206,18 +137,18 @@ export default function CartPage() {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-2 gap-5 lg:gap-6">
             <button
               type="button"
               onClick={clearCart}
-              className="h-12 rounded-[8px] border border-black text-sm font-semibold"
+              className="h-12 rounded-[12px] border border-black text-sm lg:text-base font-medium cursor-pointer hover:opacity-70 duration-300 ease-in-out"
             >
               Empty Cart
             </button>
 
             <Link
               href="/checkout"
-              className="grid h-12 place-items-center rounded-[8px] bg-[var(--orange)] text-sm font-semibold text-white"
+              className="grid h-12 place-items-center rounded-[8px] bg-[var(--orange)] text-sm lg:text-base font-medium cursor-pointer hover:opacity-70 duration-300 ease-in-out text-white"
             >
               Checkout
             </Link>

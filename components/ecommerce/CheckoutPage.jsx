@@ -1,88 +1,9 @@
-// export default function CheckoutPage() {
-//   return (
-//     <main className="bg-[#f6f6f6] py-12">
-//       <section className="container-dar grid gap-8 lg:grid-cols-[1fr_360px]">
-//         <form className="rounded-[16px] bg-white p-6">
-//           <h1 className="mb-6 text-2xl font-bold">Checkout</h1>
 
-//           <div className="grid gap-4 md:grid-cols-2">
-//             {[
-//               "First Name",
-//               "Last Name",
-//               "Email Address",
-//               "Phone Number",
-//               "City",
-//               "Postal Code",
-//             ].map((label) => (
-//               <label key={label} className="text-sm font-medium">
-//                 {label}
-//                 <input
-//                   className="mt-2 h-12 w-full rounded-[10px] bg-[#f6f6f6] px-4 outline-none focus:ring-1 focus:ring-[var(--orange)]"
-//                   placeholder={label}
-//                 />
-//               </label>
-//             ))}
-
-//             <label className="text-sm font-medium md:col-span-2">
-//               Address
-//               <textarea
-//                 className="mt-2 min-h-28 w-full rounded-[10px] bg-[#f6f6f6] px-4 py-3 outline-none focus:ring-1 focus:ring-[var(--orange)]"
-//                 placeholder="Complete address"
-//               />
-//             </label>
-//           </div>
-
-//           <div className="mt-6 rounded-[12px] bg-[#f6f6f6] p-4">
-//             <h2 className="mb-4 font-bold">Payment Method</h2>
-
-//             <label className="mb-3 flex items-center gap-3 text-sm">
-//               <input type="radio" name="payment" defaultChecked />
-//               Cash On Delivery
-//             </label>
-
-//             <label className="flex items-center gap-3 text-sm">
-//               <input type="radio" name="payment" />
-//               Pay Online
-//             </label>
-//           </div>
-//         </form>
-
-//         <aside className="rounded-[16px] bg-white p-6">
-//           <h2 className="text-xl font-bold">Order Summary</h2>
-
-//           <div className="mt-6 space-y-4 text-sm">
-//             <div className="flex justify-between">
-//               <span>Subtotal</span>
-//               <span>$90</span>
-//             </div>
-
-//             <div className="flex justify-between">
-//               <span>Delivery</span>
-//               <span>$10</span>
-//             </div>
-
-//             <div className="flex justify-between border-t pt-4 text-lg font-bold">
-//               <span>Total</span>
-//               <span>$100</span>
-//             </div>
-//           </div>
-
-//           <button className="mt-6 w-full rounded-[10px] bg-[var(--orange)] py-4 text-sm font-bold text-white">
-//             Place Order
-//           </button>
-//         </aside>
-//       </section>
-//     </main>
-//   );
-// }
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatPrice, useCart } from "@/lib/cart-store";
-
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, totals, increaseItem, decreaseItem, clearCart } = useCart();
@@ -190,25 +111,25 @@ export default function CheckoutPage() {
   }
 
   return (
-    <main className="bg-[#f6f6f6] py-8 lg:py-10">
+    <main className="bg-[#f6f6f6] py-8">
       <form
         onSubmit={handleSubmit}
         className="container-dar grid gap-6 lg:grid-cols-[1fr_420px]"
       >
         <div className="space-y-6">
-          <section className="rounded-[14px] bg-white p-5 lg:p-6">
-            <h1 className="mb-6 text-xl font-semibold">Order Summary</h1>
+          <section className="rounded-[12px] bg-white p-5 lg:p-6">
+            <h1 className="mb-6 text-lg font-semibold">Order Summary</h1>
 
             <div className="space-y-5">
               {items.map((item) => (
                 <div
                   key={item.cartKey}
-                  className="grid gap-4 rounded-[12px] bg-[#F6F6F6] p-4 md:grid-cols-[118px_1fr_auto]"
+                  className="grid gap-4 rounded-[12px] bg-[#F6F6F6] p-3 md:grid-cols-[118px_1fr_auto]"
                 >
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="h-[118px] w-[118px] rounded-[10px] object-cover"
+                    className="h-[131px]! w-[131px]! rounded-xl object-cover"
                   />
 
                   <div>
@@ -225,23 +146,23 @@ export default function CheckoutPage() {
                   </div>
 
                   <div className="flex flex-col items-end justify-between gap-5">
-                    <div className="flex h-9 items-center overflow-hidden rounded-[6px] border border-[#E5E7EB] bg-white">
+                    <div className="flex h-9 items-center overflow-hidden rounded-[6px] border border-[#E5E7EB] p-1">
                       <button
                         type="button"
                         onClick={() => decreaseItem(item.cartKey)}
-                        className="grid h-full w-10 place-items-center text-xl"
+                        className="grid h-full w-10 place-items-center text-xl bg-[#F2F2F2] w-6 h-6 rounded-[6px] cursor-pointer"
                       >
                         −
                       </button>
 
-                      <span className="grid h-full w-12 place-items-center font-semibold">
+                      <span className="grid h-full w-12 place-items-center font-semibold text-lg">
                         {item.quantity}
                       </span>
 
                       <button
                         type="button"
                         onClick={() => increaseItem(item.cartKey)}
-                        className="grid h-full w-10 place-items-center text-xl"
+                        className="grid h-full w-10 place-items-center text-xl bg-[#F2F2F2] w-6 h-6 rounded-[6px] cursor-pointer"
                       >
                         +
                       </button>
@@ -256,8 +177,8 @@ export default function CheckoutPage() {
             </div>
           </section>
 
-          <section className="rounded-[14px] bg-white p-5 lg:p-6">
-            <h2 className="mb-6 text-xl font-semibold">Price Details</h2>
+          <section className="rounded-[12px] bg-white p-5">
+            <h2 className="mb-6 text-lg font-semibold">Price Details</h2>
 
             <div className="space-y-4">
               {items.map((item) => (
@@ -266,7 +187,7 @@ export default function CheckoutPage() {
                   className="flex justify-between gap-4 text-base"
                 >
                   <span className="line-clamp-1">{item.title}</span>
-                  <span className="font-medium">
+                  <span className="font-semibold">
                     {formatPrice(item.price * item.quantity)}
                   </span>
                 </div>
@@ -274,22 +195,22 @@ export default function CheckoutPage() {
 
               <div className="flex justify-between gap-4 text-base">
                 <span>Delivery Charges</span>
-                <span className="font-medium">
+                <span className="font-semibold">
                   {formatPrice(totals.delivery)}
                 </span>
               </div>
 
-              <div className="flex justify-between border-t border-[#E5E7EB] pt-5 text-base font-semibold">
+              <div className="flex justify-between border-t border-[#E5E7EB] pt-5 text-base font-medium">
                 <span>Total (USD)</span>
-                <span className="text-[var(--orange)]">
+                <span className="text-[var(--orange)] font-semibold">
                   {formatPrice(totals.total)}
                 </span>
               </div>
             </div>
           </section>
 
-          <section className="rounded-[14px] bg-white p-5 lg:p-6">
-            <h2 className="mb-5 text-xl font-semibold">Payment Type</h2>
+          <section className="rounded-[12px] bg-white p-5">
+            <h2 className="mb-5 text-lg font-semibold">Payment Type</h2>
 
             <div className="grid gap-4 md:grid-cols-3">
               {[
@@ -304,15 +225,15 @@ export default function CheckoutPage() {
                     key={value}
                     type="button"
                     onClick={() => setPaymentType(value)}
-                    className={`flex h-14 items-center gap-4 rounded-[10px] px-5 text-sm font-semibold ${
+                    className={`flex h-14 items-center gap-4 rounded-[12px] px-3 text-sm lg:text-base font-medium whitespace-nowrap shrink-0 ${
                       active ? "bg-[#FFF3EE]" : "bg-[#F6F6F6]"
                     }`}
                   >
                     <span
-                      className={`grid h-5 w-5 place-items-center rounded-[4px] border ${
+                      className={`grid h-5 w-5 place-items-center rounded-[6px]  border ${
                         active
                           ? "border-[var(--orange)] bg-[var(--orange)] text-white"
-                          : "border-[#E5E7EB] bg-white"
+                          : "border-[#E5E7EB] bg-[#E5E7EB]!"
                       }`}
                     >
                       {active ? "✓" : ""}
@@ -324,8 +245,8 @@ export default function CheckoutPage() {
             </div>
           </section>
 
-          <section className="rounded-[14px] bg-white p-5 lg:p-6">
-            <h2 className="mb-6 text-xl font-semibold">Cancellation Policy</h2>
+          <section className="rounded-[12px] bg-white p-5">
+            <h2 className="mb-6 text-lg font-semibold">Cancellation Policy</h2>
             <p className="text-base leading-7 text-[#50565D]">
               Free cancellation before 14:00 on 17 Aug. Cancel before 24 Aug for
               a partial refund.
@@ -340,8 +261,8 @@ export default function CheckoutPage() {
         </div>
 
         <aside className="space-y-6">
-          <section className="rounded-[14px] bg-white p-5 lg:p-6">
-            <h2 className="mb-6 text-xl font-semibold">Delivery Location</h2>
+          <section className="rounded-[12px] bg-white p-5">
+            <h2 className="mb-6 text-lg font-semibold">Delivery Location</h2>
 
             <div className="space-y-5">
               <InputField
@@ -474,7 +395,7 @@ export default function CheckoutPage() {
             <button
               type="button"
               onClick={() => router.push("/cart")}
-              className="h-12 rounded-[8px] border border-black text-sm font-semibold"
+              className="h-12 rounded-[12px] border border-black text-sm lg:text-base font-medium cursor-pointer"
             >
               Discard
             </button>
@@ -482,7 +403,7 @@ export default function CheckoutPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="h-12 rounded-[8px] bg-[var(--orange)] text-sm font-semibold text-white disabled:opacity-60"
+              className="h-12 rounded-[8px] bg-[var(--orange)] text-sm lg:text-base font-medium text-white disabled:opacity-60 cursor-pointer"
             >
               {submitting ? "Processing..." : "Checkout"}
             </button>
@@ -498,7 +419,7 @@ function InputField({ label, required, value, onChange, placeholder, prefix }) {
     <label className="block text-sm font-medium">
       {label}{" "}
       {required ? <span className="text-[var(--orange)]">*</span> : null}
-      <div className="mt-2 flex h-14 items-center rounded-[10px] bg-[#F6F6F6] px-4">
+      <div className="mt-2.5 flex h-14 items-center rounded-[10px] bg-[#F6F6F6] px-4">
         {prefix ? (
           <span className="mr-3 border-r border-[#D9D9D9] pr-3 text-[#8A8A8A]">
             {prefix}
@@ -509,13 +430,12 @@ function InputField({ label, required, value, onChange, placeholder, prefix }) {
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
-          className="h-full min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[#8A8A8A]"
+          className="h-full min-w-0 flex-1 bg-transparent text-sm lg:text-base outline-none placeholder:text-[#7A7C81]"
         />
       </div>
     </label>
   );
 }
-
 function SelectField({ label, required, value, onChange, options }) {
   return (
     <label className="block text-sm font-medium">
